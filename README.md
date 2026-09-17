@@ -9,10 +9,13 @@ in, one button out.
 [![ViZDoom](https://img.shields.io/badge/ViZDoom-1.3-8b0000?style=flat-square)](https://vizdoom.farama.org/)
 [![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](LICENSE)
 
-https://github.com/user-attachments/assets/REPLACE-AFTER-UPLOAD
+![Jev turning onto a target and firing](docs/turn-then-shoot.gif)
 
-*One minute of Jev playing, with its own decision and confidence burned into
-each frame. Recorded once — see [Recording](#recording).*
+*Jev turns until the monster lines up, then fires. Its decision and confidence
+are burned into every frame.*
+
+<sub>Full minute: [`docs/jev-doom.mp4`](docs/jev-doom.mp4) · recorded once, see
+[Recording](#recording)</sub>
 
 </div>
 
@@ -120,6 +123,16 @@ bare label.
 > 6.80; neither was the model getting better or worse. Keep the seed fixed and
 > the episode count up, or you are reading noise.
 
+## What it looks like
+
+| | |
+|---|---|
+| ![firing](docs/firing.jpg) | ![point blank](docs/point-blank.jpg) |
+| `ATTACK` at 0.93 — two monsters closing, one lined up | `TURN_RIGHT` at 0.97 — still pivoting with a demon on top of it |
+
+The overlay is the whole point: you can see which button it chose and how sure
+it was, frame by frame. `record.py` draws it.
+
 ## What the model sees
 
 ```json
@@ -223,6 +236,16 @@ requests. Record once and replay forever:
 ```bash
 uv sync --extra jev --extra record
 .venv/bin/python record.py --out docs/jev-doom.mp4 --seconds 60
+```
+
+The GIF and stills above came out of that same mp4:
+
+```bash
+FF=$(python -c "import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())")
+$FF -ss 23.4 -t 4 -i docs/jev-doom.mp4 \
+    -vf "fps=10,scale=400:-1,palettegen=max_colors=64" pal.png
+$FF -ss 23.4 -t 4 -i docs/jev-doom.mp4 -i pal.png \
+    -lavfi "fps=10,scale=400:-1[x];[x][1:v]paletteuse" docs/turn-then-shoot.gif
 ```
 
 `imageio-ffmpeg` bundles its own ffmpeg, so there is nothing to install
