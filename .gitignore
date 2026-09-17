@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+_vizdoom.ini
+_vizdoom/
+*.lmp
+*.egg-info/
+.env
+.DS_Store
