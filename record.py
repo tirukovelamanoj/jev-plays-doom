@@ -40,8 +40,8 @@ BIG, SMALL = _font(20), _font(14)
 
 def overlay(frame: np.ndarray, label: str, pick: str, conf: float | None,
             kills: int, ms: float) -> np.ndarray:
-    """Burn the decision into the frame. Without it the video is just Doom —
-    the whole point is showing what the model chose and how sure it was."""
+    """Burn the decision into the frame. Without it the video is just Doom.
+    The point is showing what the model chose and how sure it was."""
     img = Image.fromarray(frame)
     d = ImageDraw.Draw(img, "RGBA")
     w, _ = img.size

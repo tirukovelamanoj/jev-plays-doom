@@ -1,4 +1,4 @@
-"""Doom, played by a System One model — the same shape as TypeSafe's demo.
+"""Doom, played by a System One model, the same shape as TypeSafe's demo.
 
     python doom_agent.py --brain heuristic          # no API key needed
     python doom_agent.py --brain jev                # needs TYPESAFE_API_KEY

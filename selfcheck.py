@@ -27,10 +27,10 @@ try:
 except ImportError as e:
     check("typesafe-sdk", False, str(e))
 # A missing key is not a broken setup, so it must not fail the exit code --
-# otherwise "is this ready?" and "do I have credentials?" give the same answer.
+# otherwise "is the install ready" and "are credentials present" give the same answer.
 has_key = bool(os.environ.get("TYPESAFE_API_KEY"))
 print(f"  {'PASS' if has_key else 'note'}  TYPESAFE_API_KEY  "
-      f"{'set' if has_key else 'not set — heuristic/random work; --brain jev needs it'}")
+      f"{'set' if has_key else 'not set, heuristic/random work; --brain jev needs it'}")
 
 # The bug that cost two zeroed baselines: bearing sign. A monster to the LEFT
 # has a POSITIVE bearing, so the heuristic must turn left for it.
@@ -45,7 +45,7 @@ scores = play(heuristic, episodes=2, tics=4, quiet=True, seed=1234)
 mean = sum(scores) / len(scores)
 check("heuristic plays", mean > 2, f"{mean:.1f} kills (bar is ~6.5 over 20)")
 
-print("\n" + ("setup ok" if ok else "SETUP BROKEN — see failures above")
+print("\n" + ("setup ok" if ok else "SETUP BROKEN, see failures above")
       + (" · ready to run --brain jev" if has_key
          else " · export TYPESAFE_API_KEY to run --brain jev"))
 sys.exit(0 if ok else 1)
